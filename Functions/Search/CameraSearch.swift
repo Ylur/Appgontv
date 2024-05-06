@@ -37,16 +37,16 @@ void main() async {
 
 
 String constructURL(String cameraName) {
-  // Split the input into brand and model components
+  
   List<String> parts = cameraName.split(' ');
   if (parts.length >= 2) {
-    String brand = parts[0].toLowerCase();  // Brand name, like 'canon'
-    // Join all parts after the brand into a model string, replace spaces with nothing (no underscores)
-    String model = parts.sublist(1).join().toLowerCase();  // Model name, like 'eosr5'
-    // Construct the URL in the format used by DPReview
+    String brand = parts[0].toLowerCase(); 
+   
+    String model = parts.sublist(1).join().toLowerCase();'
+   
     return 'https://www.dpreview.com/products/${brand}/slrs/${brand}_${model}/specifications';
   }
-  return 'https://www.dpreview.com'; // Default or error handling URL
+  return 'https://www.dpreview.com'; 
 }
 
 
@@ -65,20 +65,20 @@ Future<Map<String, Map<String, String>>> fetchProductDetails(String url) async {
         var categoryHeader = table.querySelector('th.large.groupLabel');
         if (categoryHeader != null) {
           String currentCategory = categoryHeader.text.trim();
-          specs[currentCategory] = {};  // Initialize the map for this category
+          specs[currentCategory] = {};   
 
           var rows = table.querySelectorAll('tbody > tr');
           for (var row in rows) {
             var label = row.querySelector('th.label')?.text.trim();
             var value = row.querySelector('td.value')?.text.trim();
 
-            // Handle elements with embedded tags like <span> or <ul> by extracting their text content efficiently
+            
             if (value != null && value.contains('<')) {
-              value = parser.parse(value).body!.text.trim(); // Re-parse to extract clean text
+              value = parser.parse(value).body!.text.trim(); 
             }
 
             if (label != null && value != null) {
-              specs[currentCategory]![label] = value;  // Use the null-assertion operator as we know it's initialized
+              specs[currentCategory]![label] = value;  
             }
           }
         }
