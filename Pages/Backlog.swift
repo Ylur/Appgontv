@@ -14,7 +14,7 @@ import WebKit
 struct Backlog: View {
     var body: some View {
         NavigationView {
-            WebView(url: URL(string: "https://veita2.focal.is/users/palmi/BackLog2020.nsf/index.xsp")!)
+            WebView(url: URL(string: "linkur á síðu með upplýsingum")!)
                 .navigationBarTitle("Backlog", displayMode: .inline)
         }
     }
