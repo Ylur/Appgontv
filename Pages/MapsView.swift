@@ -15,19 +15,19 @@ struct MapsView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         
-        // Create an annotation
+        
         let visitorCenterAnnotation = MKPointAnnotation()
-        visitorCenterAnnotation.coordinate = CLLocationCoordinate2D(latitude: 64.1446, longitude: -21.9152)
+        visitorCenterAnnotation.coordinate = CLLocationCoordinate2D(latitude: 64.1468308, longitude: -21.8960467)
         visitorCenterAnnotation.title = "Reykjavík"
         visitorCenterAnnotation.subtitle = "Borgartún"
         mapView.addAnnotation(visitorCenterAnnotation)
         
-        // Create an overlay
+        
         let parkingLotPoints = [
-            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1446, longitude: -21.9152)), // Top left corner
-            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1446, longitude: -21.9149)), // Top right corner
-            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1443, longitude: -21.9149)), // Bottom right corner
-            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1443, longitude: -21.9152))  // Bottom left corner
+            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1468308, longitude: -21.8960467)), // Top left corner
+            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1468308, longitude: -21.8960467)), // Top right corner
+            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1468308, longitude: -21.8960467)), // Bottom right corner
+            MKMapPoint(CLLocationCoordinate2D(latitude: 64.1468308, longitude: -21.8960467))  // Bottom left corner
         ]
         
         let parkingLotOverlay = MKPolygon(points: parkingLotPoints, count: parkingLotPoints.count)

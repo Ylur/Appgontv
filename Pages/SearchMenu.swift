@@ -1,26 +1,27 @@
 //
-//  MainMenu.swift
+//  SearchMenu.swift
 //  Appgo
 //
-//  Created by Ingi Haraldss on 5.5.2024.
+//  Created by Ingi Haraldss on 9.5.2024.
 //
 
+import Foundation
 import SwiftUI
 import MapKit
 import UIKit
 
 
-struct MainMenu: View {
+struct SearchMenu: View {
     @ObservedObject var locationViewModel = LocationManager()
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
                     Text("Gestanet")
-                    .bold()
+                        .bold()
                     + Text(" - Origo Gestir - Earthquake.Season")
-                        
+                    
                     Image("ol")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -31,7 +32,7 @@ struct MainMenu: View {
                         locationMenu
                     }
                 }
-                .navigationTitle("Appgo")
+                .navigationTitle("Yfirlit")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -45,28 +46,18 @@ struct MainMenu: View {
     }
     
     private var locationMenu: some View {
-        // tvær raðir niður á við
+        // Uppsetning UI með tveimur flokkum
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
             // undirsíður
-            NavigationLink(destination: MaturView()) {
-                MenuItemView(title: "Matseðill", imageName: "fork.knife.circle", color: .orange)
+            NavigationLink(destination: ViewControllerRepresentable()) {
+                MenuItemView(title: "Myndavélaleit", imageName: "camera", color: .orange)
             }
-            NavigationLink(destination: WorkShopView(title: "Staðsetningar")) {
-                MenuItemView(title: "Sími og staðsetningar", imageName: "map", color: .orange)
+            NavigationLink(destination: PrintersUI()) {
+                MenuItemView(title: "Prentleit", imageName: "list.bullet.clipboard", color: .orange)
             }
-            NavigationLink(destination: SearchMenu()) {
-                MenuItemView(title: "Leitarflokkur", imageName: "mappin", color: .orange)
+            NavigationLink(destination: RicohSearcherView()) {
+                MenuItemView(title: "Ricoh", imageName: "list.bullet.clipboard", color: .orange)
             }
-            NavigationLink(destination: StarfsFolk()) {
-                MenuItemView(title: "Starfsfólk", imageName: "person", color: .orange)
-            }
-            NavigationLink(destination: WheelView()) {
-                MenuItemView(title: "Lukkuhjól", imageName: "list.bullet.clipboard", color: .orange)
-            }
-            NavigationLink(destination: MapsView()) {
-                MenuItemView(title: "Kort", imageName: "mappin", color: .orange)
-            }
-
         }
     }
 }
