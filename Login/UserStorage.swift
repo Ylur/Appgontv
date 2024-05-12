@@ -12,19 +12,19 @@ class UserStorage {
     private let allowedDomains = ["appgo.is", "appgo.com"]
     private var users: [String: String] = [:]
     private var salts: [String: String] = [:]
-
+    private var emails: [String: String] = [:]
+                
     init() {
         loadUsers()
     }
     
-       func signUp(username: String, password: String) -> Bool {
+    func signUp(username: String, password: String, email: String) -> Bool {
            // athuga ef notandi er til
            if userExists(username: username) {
                print("Signup failed: Username already exists.")
                return false
            }
-          
-           addUser(username: username, password: password)
+            addUser(username: username, email: email, password: password)
            return true
        }
     func isDomainAllowed(email: String) -> Bool {
@@ -34,11 +34,12 @@ class UserStorage {
         return allowedDomains.contains(String(domain))
     }
 
-    func addUser(username: String, password: String) {
+    func addUser(username: String, email: String, password: String) {
         let salt = UUID().uuidString
         let hash = hashPassword(password, with: salt)
         users[username] = hash
         salts[username] = salt
+        emails[username] = email  // Löglegt?
         saveUsers()
     }
 
@@ -59,12 +60,12 @@ class UserStorage {
     }
 
     private func saveUsers() {
-        let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("users.json")
-        let data = ["users": users, "salts": salts]
+        let data = ["users": users, "salts": salts, "emails": emails]
         do {
             let jsonData = try JSONEncoder().encode(data)
+            let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("users.json")
             try jsonData.write(to: filePath)
-            print("Successfully saved user data at \(filePath.path)") // er í vandræðum með json þannig bætti þessu við
+            print("Successfully saved user data at \(filePath.path)")
         } catch {
             print("Failed to save user data: \(error)")
         }

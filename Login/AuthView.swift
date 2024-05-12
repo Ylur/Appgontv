@@ -5,6 +5,7 @@
 //  Created by Ingi Haraldss on 5.5.2024.
 
 import Foundation
+import Combine
 import SwiftUI
 
 struct AuthView: View {
@@ -56,45 +57,9 @@ struct AuthView: View {
                 Spacer()
             }
             .navigationDestination(isPresented: $isActive) {
-                SignUpView(isSignedIn: $viewModel.isSignedIn)
+                SignUpView()
+                    .environmentObject(viewModel)
             }
-        }
-    }
-}
-
-// Möguleiki á að sign up
-struct SignUpView: View {
-    @Binding var isSignedIn: Bool
-    @State private var username: String = ""
-    @State private var password: String = ""
-
-    var body: some View {
-        VStack {
-            Spacer()
-            Image("ol")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 150, height: 150)
-            
-            TextField("Notendanafn", text: $username)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal, 50)
-            
-            SecureField("Lykilorð", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal, 50)
-            
-            Button("Nýskrá") {
-                
-                isSignedIn = true
-            }
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.green)
-            .cornerRadius(10)
-            .padding(.horizontal, 50)
-            
-            Spacer()
         }
     }
 }
