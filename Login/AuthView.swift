@@ -3,16 +3,16 @@
 //  Appgo
 //
 //  Created by Ingi Haraldss on 5.5.2024.
-//
+
 import Foundation
 import SwiftUI
 
 struct AuthView: View {
-    @Binding var isSignedIn: Bool
+    @EnvironmentObject var viewModel: AuthViewModel
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var isActive: Bool = false
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -24,7 +24,7 @@ struct AuthView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 150, height: 150)
                     
-                    TextField("Nafn", text: $username)
+                    TextField("Notendanafn", text: $username)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 50)
                     
@@ -32,9 +32,8 @@ struct AuthView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 50)
                     
-                    Button("Skrá inn") {
-                        // Authentication logic hér
-                        self.isSignedIn = true
+                    Button("Innskráning") {
+                        viewModel.signIn(username: username, password: password)
                     }
                     .foregroundColor(.white)
                     .padding()
@@ -42,58 +41,60 @@ struct AuthView: View {
                     .cornerRadius(10)
                     .padding(.horizontal, 50)
                     
-                    
-                    Button("Ef þú ert ekki með aðgang er nýskráning hér") {
-                        
-                        self.isActive = true
+                    Button("Nýskráning") {
+                        isActive = true
                     }
                     .padding()
+
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                    }
                 }
                 
                 Spacer()
             }
             .navigationDestination(isPresented: $isActive) {
-                SignUpView(isSignedIn: $isSignedIn)
+                SignUpView(isSignedIn: $viewModel.isSignedIn)
             }
         }
     }
-    
-    struct SignUpView: View {
-        @Binding var isSignedIn: Bool
-        @State private var newUsername: String = ""
-        @State private var newPassword: String = ""
-        
-        var body: some View {
-            VStack {
-                Spacer()
+}
+
+// Möguleiki á að sign up
+struct SignUpView: View {
+    @Binding var isSignedIn: Bool
+    @State private var username: String = ""
+    @State private var password: String = ""
+
+    var body: some View {
+        VStack {
+            Spacer()
+            Image("ol")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150, height: 150)
+            
+            TextField("Notendanafn", text: $username)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal, 50)
+            
+            SecureField("Lykilorð", text: $password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal, 50)
+            
+            Button("Nýskrá") {
                 
-                VStack(spacing: 20) {
-                    Image("ol")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 150, height: 150)
-                    
-                    TextField("Nafn", text: $newUsername)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 50)
-                    
-                    SecureField("Lykilorð", text: $newPassword)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 50)
-                    
-                    Button("Nýskráning") {
-                        
-                        self.isSignedIn = true
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.green)
-                    .cornerRadius(10)
-                    .padding(.horizontal, 50)
-                }
-                
-                Spacer()
+                isSignedIn = true
             }
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.green)
+            .cornerRadius(10)
+            .padding(.horizontal, 50)
+            
+            Spacer()
         }
     }
 }
