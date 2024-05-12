@@ -6,7 +6,7 @@
 
 import Foundation
 import Combine
-
+import SwiftUI
 
 class AuthViewModel: ObservableObject {
     @Published var isSignedIn = false
@@ -27,11 +27,13 @@ class AuthViewModel: ObservableObject {
         if storage.userExists(username: username) {
             errorMessage = "Notandi er þegar til."
         } else if !storage.isDomainAllowed(email: email) {
-            errorMessage = "Email domain is not allowed."
+            errorMessage = "Rangt netfang."
         } else {
             storage.addUser(username: username,email: email, password: password)
             isSignedIn = true
         }
     }
 }
+
+
 
