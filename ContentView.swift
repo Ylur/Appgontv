@@ -8,12 +8,14 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-
+    
     var body: some View {
         if authViewModel.isSignedIn {
+            // ef þú ert innskráður ferðu á aðalsíðuna
             MainMenu()
-        } else {
-            AuthView(isSignedIn: $authViewModel.isSignedIn)
+            // ef þú ert ekki skráður inn ferðu hingað
+        }else{
+            AuthView()
         }
     }
 }
