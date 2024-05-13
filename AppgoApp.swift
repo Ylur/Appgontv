@@ -8,15 +8,11 @@
 import SwiftUI
 
 @main
-struct AppgoApp: App {
-    @StateObject private var authViewModel = AuthViewModel()
-    @StateObject private var locationManager = LocationManager()
-
+struct YourApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(authViewModel)
-                .environmentObject(locationManager)
+                .environmentObject(AuthViewModel())
         }
     }
 }

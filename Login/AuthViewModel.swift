@@ -10,7 +10,9 @@ import SwiftUI
 
 class AuthViewModel: ObservableObject {
     @Published var isSignedIn = false
-    @Published var errorMessage: String?
+    @Published var signInErrorMessage: String?
+    @Published var signUpErrorMessage: String?
+
 
     private let storage = UserStorage.shared
 
@@ -19,21 +21,25 @@ class AuthViewModel: ObservableObject {
             isSignedIn = true
         } else {
             isSignedIn = false
-            errorMessage = "Rangt lykilorð eða Notendanafn."
+            signInErrorMessage = "Rangt lykilorð eða Notendanafn."
         }
     }
-
     func signUp(username: String, email: String, password: String) {
+        signUpErrorMessage = nil
         if storage.userExists(username: username) {
-            errorMessage = "Notandi er þegar til."
-        } else if !storage.isDomainAllowed(email: email) {
-            errorMessage = "Rangt netfang."
-        } else {
-            storage.addUser(username: username,email: email, password: password)
-            isSignedIn = true
+            signUpErrorMessage = "Notandi er þegar til."
+            return
+        }
+        else if !storage.isDomainAllowed(email: email) {
+            signUpErrorMessage = "Rangt netfang."
+            return
+        }
+        storage.addUser(username: username, email: email, password: password)
+           isSignedIn = true  // Ekkert aukaskref ennþá, loggast inn strax
+        }
+    func PasswordReset(email: String) {
+        
         }
     }
-}
-
 
 

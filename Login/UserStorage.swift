@@ -6,6 +6,7 @@
 import Foundation
 import CryptoKit
 
+
 class UserStorage {
     static let shared = UserStorage()
     private var filePath = "users.json"

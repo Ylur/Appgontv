@@ -55,9 +55,13 @@ struct SearchMenu: View {
             NavigationLink(destination: PrintersUI()) {
                 MenuItemView(title: "Prentleit", imageName: "list.bullet.clipboard", color: .orange)
             }
+            NavigationLink(destination: VerðlLeit()) {
+                MenuItemView(title: "Verðsaga", imageName: "list.bullet.clipboard", color: .orange)
+            }
             NavigationLink(destination: RicohSearcherView()) {
                 MenuItemView(title: "Ricoh", imageName: "list.bullet.clipboard", color: .orange)
             }
         }
     }
 }
+

@@ -14,7 +14,7 @@ import WebKit
 struct Backlog: View {
     var body: some View {
         NavigationView {
-            WebView(url: URL(string: "linkur á síðu með upplýsingum")!)
+            WebView(url: URL(string: "url hér")!)
                 .navigationBarTitle("Backlog", displayMode: .inline)
         }
     }
