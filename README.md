@@ -34,3 +34,12 @@
 ### Bjó til lukkuhjól uppá gamanið og æfa mig.
 ## Web viewer
 ### Kóði notaður til að birta vefsíður (URL) á undirsíðum.
+
+
+
+# Disclaimer
+
+## Ég bjó ekki til ákveðnar síður:
+### Timian sem birtir matseðil
+### Verðleit sem sýnir verðsögu vöru 
+### Origo Starfsfólk 
