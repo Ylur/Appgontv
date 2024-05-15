@@ -9,9 +9,9 @@
 ### Appið verður skilað inn með fullri virkni en allir linkar, aðgangar,nöfn ofl eru gervi en ekki alvöru.
 
 
-#Login,Auth og notendaupplýsingar
+# Login,Auth og notendaupplýsingar
 
-###Login uppsetning - nánari lýsing í login möppu
-###Það eru nokkrar skrár sem sjá vinna saman að halda um innskráningu, nýskráningu, búa til nýjan notanda,
-###athuga hvort notandi sé nú þegar til ásamt því að tryggja að notandi sé með fyrirfram leyft domain/netfang.
-###Skrárnar — UserStorage.swift,AuthView.swift,AuthViewModel.swift, ásamt SignUpView.swift — vinna saman og nýta ViewModel í swift.
+### Login uppsetning - nánari lýsing í login möppu
+### Það eru nokkrar skrár sem sjá vinna saman að halda um innskráningu, nýskráningu, búa til nýjan notanda,
+### athuga hvort notandi sé nú þegar til ásamt því að tryggja að notandi sé með fyrirfram leyft domain/netfang.
+### Skrárnar — UserStorage.swift,AuthView.swift,AuthViewModel.swift, ásamt SignUpView.swift — vinna saman og nýta ViewModel í swift.
