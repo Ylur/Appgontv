@@ -1,39 +1,45 @@
-Yes, with the modifications and suggestions outlined previously, the four code files—`UserStorage.swift`, `AuthView.swift`, `AuthViewModel.swift`, and `SignUpView.swift`—will work together cohesively in a typical SwiftUI application using the MVVM (Model-View-ViewModel) design pattern. Here's a brief recap of how each component interacts within this architecture:
+Login uppsetning.
+Það eru nokkrar skrár sem sjá vinna saman að halda um innskráningu, nýskráningu, búa til nýjan notanda,
+athuga hvort notandi sé nú þegar til ásamt því að tryggja að notandi sé með fyrirfram leyft domain/netfang.
+
+Skrárnar—`UserStorage.swift`, `AuthView.swift`, `AuthViewModel.swift`, ásamt  `SignUpView.swift`— vinna saman og nýta ViewModel swift.
+
+Nánari útskýring á hluverki hverjar skrá fyrir sig:
 
 ### UserStorage.swift
-This class acts as the model component that directly manages the data related to user authentication. It handles user data storage, validation, and retrieval processes, such as:
-- Checking if a username exists.
-- Adding new users with hashed passwords and salts.
-- Authenticating existing users.
-- Ensuring sign-ups respect domain restrictions.
+Þessi skrá notar kóða sem tengjast auðkenningu notenda. skráin sér um geymslu, staðfestingu og endurheimt notendagagna, svo sem:
+
+- Athugar hvort notandanafn sé til.
+- Nýskráir notenda með dulkóðuðun á lykilorðum (hash) og salts.
+- Auðkennir núverandi notendur.
+- Tryggja að nýskráningar virki í takt við takmarkanir léna
+
 
 ### AuthViewModel.swift
-This ViewModel acts as the intermediary between the views (`AuthView` and `SignUpView`) and the model (`UserStorage`). It manages:
-- Initiating user sign-in and sign-up processes.
-- Updating observable properties that reflect the current authentication state (e.g., whether the user is signed in).
-- Providing user feedback by setting error messages when authentication fails.
+Þessi skrá / ViewModel er tenging AuthView og SignUpView ásamt UserStorage. Skráin sér um:
+- Byrja innskráningar- og nýskráningarferli notenda.
+- Uppfæra stöðu notanda (t.d. hvort notandi sé innskráður).
+- Gefur feedback / notendaviðbrögð með því að koma villuskilaboðum ef/þegar auðkenning mistekst.
 
 ### AuthView.swift
-This view is responsible for displaying the user interface where users can sign in. It interacts with `AuthViewModel` to:
-- Bind user input fields for username and password.
-- Trigger authentication processes on button actions.
-- Display error messages or state changes communicated by the ViewModel.
+Þessi skrá / ViewModel er notuð til að sýna notendaviðmót þar sem notendur geta skráð sig inn. Skráin hefur samskipti við `AuthViewModel` til að:
+- Nýta innsláttarreiti notenda fyrir notandanafn og lykilorð.
+- Byrja auðkenningarferlið þegar ýtt er á takka.
+- Sýnir villuskilaboð eða breytingar á stöðu sem ViewModel sendir.
 
 ### SignUpView.swift
-This view handles the user interface for signing up new users. It utilizes `AuthViewModel` to:
-- Capture new user credentials.
-- Invoke the sign-up process when the user submits the form.
-- Show any feedback or error messages related to the sign-up process.
+Þessi skrá / ViewModel sér um notendaviðmót fyrir nýskráningu nýrra notenda. Það notar `AuthViewModel` til að:
+- Geyma/fanga nýjar notendaupplýsingar.
+- Byrja á nýskráningarferli þegar notandi ýtir á takkann.
+- Sýna öll viðbrögð eða villuskilaboð sem tengjast nýskráningarferlinu.
 
-### How They Work Together
-- **Data Flow**: `UserStorage` provides the necessary data management functionalities. `AuthViewModel` interacts with this storage to perform operations based on user actions captured in `AuthView` and `SignUpView`.
-- **State Management**: `AuthViewModel` maintains and updates the authentication state using `@Published` properties, which trigger UI updates in `AuthView` and `SignUpView` through SwiftUI's reactive data flow mechanisms.
-- **Navigation and User Input**: Both `AuthView` and `SignUpView` communicate user inputs back to `AuthViewModel` via bindings and function calls. The ViewModel processes these inputs using logic defined in `UserStorage` and updates the views accordingly based on the outcomes.
+### Hvernig Þau Vinna Saman
+- **Gagnaflæðið á milli**: `UserStorage` veitir nauðsynlega gagnastjórnunaraðgerðir. `AuthViewModel` hefur samskipti við storages til að framkvæma notendaaðgerðum sem fangaðar eru í `AuthView` og `SignUpView`.
+- **Stjórnun Ástanda(@state í kóðanum)**: `AuthViewModel` viðheldur og uppfærir auðkenningarstöðu með `@Published` eiginleikum, sem kveikja á uppfærslum á viðmótum í `AuthView` og `SignUpView` í gegnum reactive SwiftUI.
+- **Stjórnun og Notenda upplýsingar**: Bæði `AuthView` og `SignUpView` senda notendainntak aftur til `AuthViewModel` í gegnum bindingar og fallaköll. ViewModel vinnur úr þessum inntökum með rökfræði skilgreind í `UserStorage` og uppfærir viðmótin samkvæmt niðurstöðunum.
 
-### Example Interaction
-1. **User Signs Up**: The user fills out their details in `SignUpView` and submits.
-2. **ViewModel Processes**: `SignUpView` calls `signUp` on `AuthViewModel`, passing the user's details.
-3. **Storage Validation**: `AuthViewModel` uses `UserStorage` to check the validity of the user's details (e.g., domain validation, existing user check) and attempts to add the new user.
-4. **Feedback**: `AuthViewModel` updates its state based on the outcome (success or error), and `SignUpView` reflects these changes (e.g., showing an error message or redirecting the user).
-
-This setup ensures that your application maintains a clean separation of concerns, enhances maintainability, and leverages SwiftUI's strong support for reactive programming paradigms.
+### Dæmi um virkni:
+1. **Notandi Skráir Sig**: Notandinn fyllir út upplýsingar sínar í `SignUpView` og sendir inn.
+2. **ViewModel notar upplýsingarnar og vinnur úr þeim**: `SignUpView` kallar á `signUp` í `AuthViewModel` með upplýsingum notandans.
+3. **Staðfesting á UserStorage**: `AuthViewModel` notar `UserStorage` til að athuga upplýsingar notandans (t.d. netfangs staðfesting, athuga hvort notandi sé til) og að bæta við nýjum notanda.
+4. **Viðbrögð**: `AuthViewModel` uppfærir stöðuna út frá niðurstöðunni (success eða error), og `SignUpView` endurspeglar þessar breytingar (t.d. sýnir villuskilaboðin eða sendir notanda áfram).
