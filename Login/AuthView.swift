@@ -47,7 +47,7 @@ struct AuthView: View {
                     }
                     .padding()
 
-                    if let errorMessage = viewModel.errorMessage {
+                    if let errorMessage = viewModel.signInErrorMessage {
                         Text(errorMessage)
                             .foregroundColor(.red)
                             .padding()

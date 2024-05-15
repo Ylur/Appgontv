@@ -8,7 +8,9 @@ import CryptoKit
 
 class UserStorage {
     static let shared = UserStorage()
-    private var filePath = "users.json"
+    // Eingöngu notað í dev
+    private let filePath = URL(fileURLWithPath: "/Users/ingih/Applications/Appgo/Appgo/Appgo/users.json")
+    
     private let allowedDomains = ["appgo.is", "appgo.com"]
     private var users: [String: String] = [:]
     private var salts: [String: String] = [:]
@@ -19,14 +21,14 @@ class UserStorage {
     }
     
     func signUp(username: String, password: String, email: String) -> Bool {
-           // athuga ef notandi er til
-           if userExists(username: username) {
-               print("Signup failed: Username already exists.")
-               return false
-           }
-            addUser(username: username, email: email, password: password)
-           return true
-       }
+        if userExists(username: username) {
+            print("Signup failed: Username already exists.")
+            return false
+        }
+        addUser(username: username, email: email, password: password)
+        return true
+    }
+
     func isDomainAllowed(email: String) -> Bool {
         guard let domain = email.split(separator: "@").last else {
             return false
@@ -39,9 +41,12 @@ class UserStorage {
         let hash = hashPassword(password, with: salt)
         users[username] = hash
         salts[username] = salt
-        emails[username] = email  // Löglegt?
+        emails[username] = email
         saveUsers()
+        // fyrir debug
+        print("Added user: \(username)")
     }
+
 
     func authenticate(username: String, password: String) -> Bool {
         guard let storedHash = users[username], let salt = salts[username] else { return false }
@@ -60,19 +65,19 @@ class UserStorage {
     }
 
     private func saveUsers() {
+        //uppsett með dev í huga
         let data = ["users": users, "salts": salts, "emails": emails]
         do {
             let jsonData = try JSONEncoder().encode(data)
-            let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("users.json")
             try jsonData.write(to: filePath)
             print("Successfully saved user data at \(filePath.path)")
         } catch {
-            print("Failed to save user data: \(error)")
+            print("Error saving user data: \(error.localizedDescription)")
         }
     }
 
+
     private func loadUsers() {
-        let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("users.json")
         if FileManager.default.fileExists(atPath: filePath.path) {
             do {
                 let data = try Data(contentsOf: filePath)
@@ -89,5 +94,4 @@ class UserStorage {
         }
     }
 }
-
 
