@@ -9,57 +9,46 @@ import Combine
 import SwiftUI
 
 struct AuthView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var isActive: Bool = false
-
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
-                Spacer()
+                TextField("Netfang", text: $authViewModel.email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 
-                VStack(spacing: 20) {
-                    Image("ol")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 150, height: 150)
-                    
-                    TextField("Notendanafn", text: $username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 50)
-                    
-                    SecureField("Lykilorð", text: $password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 50)
-                    
-                    Button("Innskráning") {
-                        viewModel.signIn(username: username, password: password)
-                    }
-                    .foregroundColor(.white)
+                SecureField("Lykilorð", text: $authViewModel.password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding(.horizontal, 50)
-                    
-                    Button("Nýskráning") {
-                        isActive = true
-                    }
-                    .padding()
-
-                    if let errorMessage = viewModel.signInErrorMessage {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .padding()
-                    }
+                
+                if let errorMessage = authViewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
                 }
                 
-                Spacer()
+                Button(action: {
+                    authViewModel.signIn()
+                }) {
+                    Text("Innskráning")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                }
+                .padding()
+                
+                NavigationLink(destination: PasswordResetView().environmentObject(authViewModel)) {
+                    Text("Endursetja lykilorð ?")
+                }
+                .padding()
+                
+                NavigationLink(destination: SignUpView().environmentObject(authViewModel)) {
+                    Text("Nýskráning")
+                }
+                .padding()
             }
-            .navigationDestination(isPresented: $isActive) {
-                SignUpView()
-                    .environmentObject(viewModel)
-            }
+            .navigationBarTitle("Innskráning")
         }
     }
 }
