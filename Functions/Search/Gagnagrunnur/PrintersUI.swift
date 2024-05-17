@@ -12,12 +12,22 @@ struct PrintersUI: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var searchText = "" // Leitartextinn
-        @State private var searchResults: [Printer] = [] // Leitar niðurstöður
-        var printerstManager = PrintersManager() // Uppsetning á leit
-    
+    @State private var searchResults: [Printer] = [] // Leitar niðurstöður
+        
+    var printerstManager = PrintersManager() // Uppsetning á leit
     var body: some View {
             NavigationView {
                 VStack {
+                    HStack {
+                                     Image("canon") // canon
+                                         .resizable()
+                                         .aspectRatio(contentMode: .fit)
+                                         .frame(height: 60)
+                      
+                            
+                                 }
+                                 .padding(.top)
+                    
                     TextField("Settu inn tegund af prentara eða tóner", text: $searchText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
@@ -53,7 +63,7 @@ struct PrintersUI: View {
                                                   }
                         }
                     }
-                    .navigationTitle("Prentara leit")
+                    .navigationTitle("Prentvöru leit")
                 }
             }
         }

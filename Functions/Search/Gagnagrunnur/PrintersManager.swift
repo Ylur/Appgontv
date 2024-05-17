@@ -36,6 +36,10 @@ import Foundation
                 printer.mfgNumber.localizedCaseInsensitiveContains(query) ||
                 printer.model.localizedCaseInsensitiveContains(query) ||
                 printer.brand.localizedCaseInsensitiveContains(query) ||
+                printer.maintenanceBox!.localizedCaseInsensitiveContains(query) ||
+                printer.printHead!.localizedCaseInsensitiveContains(query) ||
+                printer.imagingUnit!.localizedCaseInsensitiveContains(query) ||
+                printer.drumUnit!.localizedCaseInsensitiveContains(query) ||
                 (printer.tonerInk?.localizedCaseInsensitiveContains(query) ?? false)
             }
             print("Search for '\(query)' found \(results.count) results.")
