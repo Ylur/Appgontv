@@ -5,7 +5,7 @@
 //  Created by Ingi Haraldss on 5.5.2024.
 
 import SwiftUI
-
+// muna laga fyrir darkmode
 struct ContentView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     
