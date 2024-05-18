@@ -16,7 +16,7 @@ struct MapView: View {
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
         _region = State(initialValue: MKCoordinateRegion(
-            center: coordinate, 
+            center: coordinate,
             span: MKCoordinateSpan(
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01)
@@ -24,7 +24,19 @@ struct MapView: View {
     }
 
     var body: some View {
-        Map(coordinateRegion: $region)
+        Map(coordinateRegion: $region, annotationItems: [coordinate]) { place in
+            MapAnnotation(coordinate: place) {
+                Image(systemName: "pin.circle.fill")
+                    .foregroundColor(.red)
+                    .font(.title)
+            }
+        }
+        .ignoresSafeArea(edges: .top)
     }
 }
 
+extension CLLocationCoordinate2D: Identifiable {
+    public var id: String {
+        "\(latitude),\(longitude)"
+    }
+}

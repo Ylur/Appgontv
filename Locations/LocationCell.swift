@@ -12,10 +12,16 @@ struct LocationCell: View {
     var location: LocationData
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(location.title).font(.headline)
-            Text("Phone: \(location.phoneNumber)")
-            Text("Address: \(location.address)")
+        HStack {
+            Image(systemName: "location.circle.fill")
+                .foregroundColor(.blue)
+                .imageScale(.large)
+            VStack(alignment: .leading) {
+                Text(location.title).font(.headline)
+                Text("Phone: \(location.phoneNumber)")
+                Text("Address: \(location.address)")
+            }
         }
+        .padding()
     }
 }

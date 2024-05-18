@@ -2,93 +2,90 @@
 //  UserStorage.swift
 //  Appgo
 //  Created by Ingi Haraldss on 5.5.2024.
-
 import Foundation
-import CryptoKit
-
+import FirebaseAuth
+import FirebaseFirestore
 
 class UserStorage {
     static let shared = UserStorage()
-    private var filePath = "users.json"
-    private let allowedDomains = ["appgo.is", "appgo.com"]
-    private var users: [String: String] = [:]
-    private var salts: [String: String] = [:]
-    private var emails: [String: String] = [:]
-                
-    init() {
-        loadUsers()
+    // nota appgo domain fyrir testing
+    private let allowedDomains = ["appgo.is", "appgo.com", "nemandi.ntv.is"]
+    private let db = Firestore.firestore()
+    
+    private let emailKey = "userEmail"
+    private let passwordKey = "userPassword"
+    private let userDefaults = UserDefaults.standard
+    
+    private init() {}
+    
+    func rememberUser(email: String, password: String) {
+        userDefaults.set(email, forKey: emailKey)
+        userDefaults.set(password, forKey: passwordKey)
     }
     
-    func signUp(username: String, password: String, email: String) -> Bool {
-           // athuga ef notandi er til
-           if userExists(username: username) {
-               print("Signup failed: Username already exists.")
-               return false
-           }
-            addUser(username: username, email: email, password: password)
-           return true
-       }
+    func isUserRemembered() -> Bool {
+        return userDefaults.string(forKey: emailKey) != nil && userDefaults.string(forKey: passwordKey) != nil
+    }
+    
+    func getRememberedEmail() -> String? {
+        return userDefaults.string(forKey: emailKey)
+    }
+    
+    func getRememberedPassword() -> String? {
+        return userDefaults.string(forKey: passwordKey)
+    }
+    
+    func forgetUser() {
+        userDefaults.removeObject(forKey: emailKey)
+        userDefaults.removeObject(forKey: passwordKey)
+    }
+    
     func isDomainAllowed(email: String) -> Bool {
         guard let domain = email.split(separator: "@").last else {
             return false
         }
         return allowedDomains.contains(String(domain))
     }
-
-    func addUser(username: String, email: String, password: String) {
-        let salt = UUID().uuidString
-        let hash = hashPassword(password, with: salt)
-        users[username] = hash
-        salts[username] = salt
-        emails[username] = email  // Löglegt?
-        saveUsers()
-    }
-
-    func authenticate(username: String, password: String) -> Bool {
-        guard let storedHash = users[username], let salt = salts[username] else { return false }
-        return storedHash == hashPassword(password, with: salt)
-    }
-
-    func userExists(username: String) -> Bool {
-        return users[username] != nil
-    }
-
-    private func hashPassword(_ password: String, with salt: String) -> String {
-        let saltedPassword = password + salt
-        let inputData = Data(saltedPassword.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        return hashedData.compactMap { String(format: "%02x", $0) }.joined()
-    }
-
-    private func saveUsers() {
-        let data = ["users": users, "salts": salts, "emails": emails]
-        do {
-            let jsonData = try JSONEncoder().encode(data)
-            let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("users.json")
-            try jsonData.write(to: filePath)
-            print("Successfully saved user data at \(filePath.path)")
-        } catch {
-            print("Failed to save user data: \(error)")
+    
+    func signUp(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
+        guard isDomainAllowed(email: email) else {
+            completion(false, "Netfang hafnað")
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            if let error = error {
+                completion(false, error.localizedDescription)
+                return
+            }
+            
+            guard let user = authResult?.user else {
+                completion(false, "Ekki gegkk að stofna aðgang")
+                return
+            }
+            
+            let userData: [String: Any] = [
+                "email": email,
+                "createdAt": Timestamp()
+            ]
+            
+            self?.db.collection("users").document(user.uid).setData(userData) { error in
+                if let error = error {
+                    completion(false, error.localizedDescription)
+                    return
+                }
+                completion(true, nil)
+            }
         }
     }
-
-    private func loadUsers() {
-        let filePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("users.json")
-        if FileManager.default.fileExists(atPath: filePath.path) {
-            do {
-                let data = try Data(contentsOf: filePath)
-                let loadedData = try JSONDecoder().decode([String: [String: String]].self, from: data)
-                users = loadedData["users"] ?? [:]
-                salts = loadedData["salts"] ?? [:]
-            } catch {
-                print("Failed to load user data: \(error)")
+    
+    func authenticate(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                completion(false, error.localizedDescription)
+                return
             }
-        } else {
-            print("No existing user data file found. A new file will be created upon adding a user.")
-            users = [:]
-            salts = [:]
+            completion(true, nil)
         }
     }
 }
-
-

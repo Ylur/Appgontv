@@ -1,12 +1,5 @@
 //  AppgoApp.swift
 //  Appgo
-//
-//  Created by Ingi Haraldss on 5.5.2024.
-//
-
-//  AppgoApp.swift
-//  Appgo
-//
 //  Created by Ingi Haraldss on 5.5.2024.
 //
 
@@ -15,8 +8,11 @@ import FirebaseCore
 import FirebaseFirestore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+  
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        //Firebase fyrst
         FirebaseApp.configure()
         return true
     }
@@ -26,8 +22,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct Appgo: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    let locationManager = LocationManager()
+
     init() {
-        // passa að firestore komi eftir firebaseapp config
+        // svo firestore
         DispatchQueue.main.async {
             let settings = FirestoreSettings()
             Firestore.firestore().settings = settings
@@ -38,6 +36,7 @@ struct Appgo: App {
         WindowGroup {
             ContentView()
                 .environmentObject(AuthViewModel())
+                .environmentObject(LocationManager())
         }
     }
 }
