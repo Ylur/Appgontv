@@ -6,4 +6,4 @@
 
 ### Við fáum reglulega margar gerðir af spurningum en um það sama og því vildi ég búa til leitarvélar til að flýta fyrir svörun, auka þjónustustig og fyrst og fremst hjalpa viðskiptavinum að leita upplýsinga sjálf.
 
-### Appið verður skilað inn með fullri virkni en allir linkar, aðgangar,nöfn ofl eru gervi en ekki alvöru.
+### Appið verður skilað inn með fullri virkni og tengt við Firebase til að sjá um login/SignUp en allir linkar, aðgangar,nöfn ofl eru gervi en ekki alvöru.
