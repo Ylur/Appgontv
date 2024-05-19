@@ -53,7 +53,7 @@ struct MainMenu: View {
             NavigationLink(destination: StarfsFolk()) {
                 MenuItemView(title: "Starfsfólk", imageName: "person", color: .orange)
             }
-            NavigationLink(destination: WheelView()) {
+            NavigationLink(destination: FortuneWheelView()) {
                 MenuItemView(title: "Lukkuhjól", imageName: "list.bullet.clipboard", color: .orange)
             }
         }
