@@ -1,7 +1,6 @@
 //
 //  MaturItemView.swift
 //  Appgo
-//
 //  Created by Ingi Haraldss on 5.5.2024.
 //
 
@@ -27,11 +26,12 @@ struct MenuItemView: View {
         }
         .padding()
         .frame(width: 150, height: 150)
-        .background(Color.white)
+        .background(Color(UIColor.systemBackground))  //Dark eða Lightmode
         .cornerRadius(10)
         .shadow(radius: 5)
     }
 }
+
 
 
 
