@@ -1,0 +1,93 @@
+[
+    {
+        "id": "1f3f596c-ff43-486b-9e1d-9dce24d37a91",
+        "title": "Akureyri",
+        "latitude": 65.6814,
+        "longitude": -18.0895,
+        "phoneNumber": "516-1300",
+        "address": "Hvannavellir 14, 2hæð",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+    },
+    {
+        "id": "beece931-68ac-41e4-af3b-7ef952764446",
+        "title": "Eldhaf Akureyri",
+        "latitude": 65.6814,
+        "longitude": -18.0895,
+        "phoneNumber": "537-9999",
+        "address": "Glerártorg",
+        "companyName": "Verslun Eldhaf",
+        "email": "sala@eldhaf.is"
+    },
+    {
+        "id": "ca3396a4-c59e-49b4-90d7-abc1588bc907",
+        "title": "Hornafjörður",
+        "latitude": 65.2666,
+        "longitude": -14.3948,
+        "phoneNumber": "478-2393",
+        "address": "Hafnarbraut 24",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+    },
+    {
+        "id": "1232f759-0e25-4d5b-9462-7a3580f054a1",
+        "title": "Hvammstangi",
+        "latitude": 64.1353,
+        "longitude": -21.8952,
+        "phoneNumber": "455-2511/451-2260",
+        "address": "Höfðabraut 6",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+    },
+    {
+        "id": "5f1f94b2-c8b3-4b6b-8e16-b74f517928ce",
+        "title": "Reykjavík",
+        "latitude": 64.1420,
+        "longitude": -21.9158,
+        "phoneNumber": "516-1900",
+        "address": "Köllunarklettsvegur 8",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+    },
+    {
+        "id": "8d6c998a-56b9-40fd-bb6a-e36c9f421488",
+        "title": "Reykjavík",
+        "latitude": 64.1420,
+        "longitude": -21.9158,
+        "phoneNumber": "516-1900",
+        "address": "Faxafen 12",
+        "companyName": "Sónn",
+        "email": "sala@sonn.is"
+    },
+    {
+        "id": "db036fd9-32d3-4b97-a8f8-8ec368f8492a",
+        "title": "Egilsstaðir",
+        "latitude": 64.1420,
+        "longitude": -21.9158,
+        "phoneNumber": "516-1900",
+        "address": "Miðás 1",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+    },
+    {
+        "id": "3ec3135b-0f02-49d5-8bb8-c6b535614c29",
+        "title": "Neskaupstaður",
+        "latitude": 64.1420,
+        "longitude": -21.9158,
+        "phoneNumber": "516-1900",
+        "address": "Nesgata 7",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+    },
+    {
+        "id": "cdaf0507-b9f9-4302-bf39-0d9f8dc1d96b",
+        "title": "Ísafjörður",
+        "latitude": 64.1420,
+        "longitude": -21.9158,
+        "phoneNumber": "516-1900",
+        "address": "Nesgata 7",
+        "companyName": "Origo",
+        "email": "sala@origo.is"
+        
+    }
+]
