@@ -3,7 +3,7 @@
 //  Appgo
 //
 //  Created by Ingi Haraldss on 5.5.2024.
-//
+// Notað til að birta vefsíður inn í appinu og grípa error
 
 import Foundation
 import SwiftUI
