@@ -10,7 +10,7 @@ import UIKit
 import SwiftSoup
 
 class RicohSearcher: UIViewController {
-    // UI Components
+    // UI 
     let inputTextField = UITextField()
     let searchButton = UIButton(type: .system)
     let resultTextView = UITextView()
@@ -85,7 +85,7 @@ class RicohSearcher: UIViewController {
     func parseSuppliesAndAccessories(html: String) -> String {
         do {
             let doc: Document = try SwiftSoup.parse(html)
-            // Debugging: Check if the container itself is being selected
+            // fyrir Debugging
             let containers = try doc.select("div.max-w-[912px].mx-auto.container")
             if containers.isEmpty {
                 return "Debug: No containers found."
@@ -94,7 +94,7 @@ class RicohSearcher: UIViewController {
             var result = "Supplies & Accessories:\n"
             
             for container in containers {
-                // Further debugging: Check if the specific block elements are selected
+                // enn meira debugging
                 let elements = try container.select("div.block.p-4.pb-6.rounded-[10px].text-black-soft.shadow-md.bg-white.print\\:shadow-none.cursor-pointer.mt-8")
                 if elements.isEmpty {
                     return "Debug: No elements found within containers."
@@ -112,8 +112,8 @@ class RicohSearcher: UIViewController {
                             return "Debug: No title found."
                         }
 
-                        let id = try div.select("p.text-sm.text-grey-primary.pb-4").text()  // Extracts the ID
-                        let listItems = try div.select("ul li").map { try $0.text() }  // Extracts all list items in the UL
+                        let id = try div.select("p.text-sm.text-grey-primary.pb-4").text()  // sækir ID
+                        let listItems = try div.select("ul li").map { try $0.text() }  // sækir öll atriði innan UL
 
                         let yield = listItems.first { $0.lowercased().contains("yield") } ?? "Yield information not available"
                         let contents = listItems.first { $0.lowercased().contains("contents") } ?? "Contents information not available"
